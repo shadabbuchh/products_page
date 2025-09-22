@@ -5,7 +5,7 @@
   "installCommand": "pnpm install",
   "functions": {
     "api/index.mjs": {
-      "runtime": "nodejs20.x",
+      "maxDuration": 30,
       "includeFiles": "backend/dist/**,shared/openapi_spec_*.yaml,backend/src/db/migrations/**"
     }
   },
