@@ -1,0 +1,43 @@
+description: 'The system shall display a searchable, sortable, and paginated list
+  of all products on the Products page.
+
+  When the user types in the search box, the system shall filter the visible products
+  by name, SKU, and description.
+
+  When the user applies filters or sorting, the system shall update the displayed
+  product list and maintain the current pagination state.
+
+  While a product''s available stock is below its low-stock threshold, the system
+  shall visually highlight that product''s row to indicate low stock.
+
+  When the user requests a product''s details, the system shall open the product details
+  view without losing the current table state.
+
+  Where inline editing is available, the system shall allow quick edits for key attributes
+  directly from the table and persist changes immediately.
+
+  When the user navigates pages in the table, the system shall show the correct subset
+  of products and preserve applied filters and sort order.'
+id: '1'
+name: Products list
+page_name: Products
+sub_items:
+- description: When the user enters text, the system shall filter products by name,
+    SKU, and description and show matching results immediately.
+  id: '1.1'
+  name: Search box
+- description: When the page loads or the user changes pages, filters, or sort order,
+    the system shall show the appropriate page of products with columns for image,
+    name, SKU, price, stock, and actions.
+  id: '1.2'
+  name: Paginated product table
+- description: When the user selects filters or sorting options, the system shall
+    update the table to reflect category, price range, stock status, and any selected
+    sort order.
+  id: '1.3'
+  name: Filtering and sorting controls
+- description: While a product is below its low-stock threshold, the system shall
+    visually emphasize the product row and expose quick actions (view, edit, toggle
+    visibility) for fast management.
+  id: '1.4'
+  name: Low stock highlighting & quick actions

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Products Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        :root {
+            --color-primary: 96 165 250; /* blue-400 */
+            --color-primary-hover: 71 135 239; /* blue-500 */
+            --color-secondary: 249 115 22; /* orange-500 */
+            --color-success: 34 197 94; /* green-500 */
+            --color-warning: 234 179 8; /* yellow-500 */
+            --color-danger: 239 68 68; /* red-500 */
+
+            --surface-1: 255 255 255; /* white */
+            --surface-2: 249 250 251; /* gray-50 */
+            --surface-3: 243 244 246; /* gray-100 */
+            --surface-low-stock: 254 242 242; /* red-50 */
+
+            --text-1: 17 24 39; /* gray-900 */
+            --text-2: 55 65 81; /* gray-700 */
+            --text-muted: 107 114 128; /* gray-500 */
+            
+            --border-color: 229 231 235; /* gray-200 */
+            
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            
+            --spacing-unit: 0.25rem; /* 4px */
+        }
+
+        body {
+            background-color: rgb(var(--surface-2));
+            color: rgb(var(--text-1));
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+        }
+        
+        .focus-ring {
+            outline: none;
+            box-shadow: 0 0 0 2px rgb(var(--surface-1)), 0 0 0 4px rgb(var(--color-primary));
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto max-w-screen-xl p-4 sm:p-6 lg:p-8">
+        <main class="space-y-6">
+            <!-- Header -->
+            <header class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900" style="color: rgb(var(--text-1));">Products</h1>
+                    <p class="mt-1 text-sm text-gray-600" style="color: rgb(var(--text-2));">Manage your product catalog efficiently.</p>
+                </div>
+                <div class="flex-shrink-0">
+                    <button type="button" class="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors" style="background-color: rgb(var(--color-primary));">
+                        <i data-lucide="plus-circle" class="h-4 w-4" aria-hidden="true"></i>
+                        <span>Create Product</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Controls -->
+            <div class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="relative lg:col-span-2">
+                        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" style="color: rgb(var(--text-muted));" aria-hidden="true"></i>
+                        <input type="text" placeholder="Search by name, SKU..." class="w-full rounded-md border-gray-300 py-2 pl-10 pr-4 text-sm focus:border-blue-500 focus:ring-blue-500" style="border-color: rgb(var(--border-color));">
+                    </div>
+                    <button type="button" class="flex w-full items-center justify-between rounded-md border bg-white px-4 py-2 text-sm text-gray-700 shadow-sm" style="border-color: rgb(var(--border-color)); background-color: rgb(var(--surface-1)); color: rgb(var(--text-2));">
+                        <span>Category: All</span>
+                        <i data-lucide="chevron-down" class="h-4 w-4" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="flex w-full items-center justify-between rounded-md border bg-white px-4 py-2 text-sm text-gray-700 shadow-sm" style="border-color: rgb(var(--border-color)); background-color: rgb(var(--surface-1)); color: rgb(var(--text-2));">
+                        <span>Stock Status: Any</span>
+                        <i data-lucide="chevron-down" class="h-4 w-4" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Products Table -->
+            <div class="overflow-hidden rounded-lg border shadow-sm" style="background-color: rgb(var(--surface-1)); border-color: rgb(var(--border-color));">
+                <div class="overflow-x-auto">
+                    <table class="w-full min-w-full divide-y divide-gray-200" style="border-color: rgb(var(--border-color));">
+                        <thead class="bg-gray-50" style="background-color: rgb(var(--surface-2));">
+                            <tr>
+                                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6" style="color: rgb(var(--text-1));">Product</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="color: rgb(var(--text-1));">SKU</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="color: rgb(var(--text-1));">Price</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="color: rgb(var(--text-1));">Stock</th>
+                                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                                    <span class="sr-only">Actions</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 bg-white" style="border-color: rgb(var(--border-color)); background-color: rgb(var(--surface-1));">
+                            <!-- Low Stock Product Row -->
+                            <tr style="background-color: rgb(var(--surface-low-stock));">
+                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            <img class="h-10 w-10 rounded-md object-cover" src="https://assets.appsmith.com/widgets/default.png" alt="Ergonomic Keyboard">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="font-medium text-gray-900" style="color: rgb(var(--text-1));">Ergonomic Keyboard</div>
+                                            <div class="text-gray-500" style="color: rgb(var(--text-muted));">Electronics</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500" style="color: rgb(var(--text-2));">EK-401</td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500" style="color: rgb(var(--text-2));">$75.00</td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                    <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium text-red-800" style="background-color: rgb(var(--color-danger) / 0.1); color: rgb(var(--color-danger));">
+                                        Low Stock (5)
+                                    </span>
+                                </td>
+                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <button type="button" class="p-1 text-gray-500 rounded-md hover:bg-gray-100" style="color: rgb(var(--text-muted));"><i data-lucide="eye" class="h-4 w-4"></i></button>
+                                        <button type="button" class="p-1 text-gray-500 rounded-md hover:bg-gray-100" style="color: rgb(var(--text-muted));"><i data-lucide="edit-2" class="h-4 w-4"></i></button>
+                                        <button type="button" class="p-1 text-gray-500 rounded-md hover:bg-gray-100" style="color: rgb(var(--text-muted));"><i data-lucide="toggle-right" class="h-4 w-4"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Standard Product Row -->
+                            <tr>
+                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            <img class="h-10 w-10 rounded-md object-cover" src="https://assets.appsmith.com/widgets/default.png" alt="Wireless Mouse">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="font-medium text-gray-900" style="color: rgb(var(--text-1));">Wireless Mouse</div>
+                                            <div class="text-gray-500" style="color: rgb(var(--text-muted));">Accessories</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500" style="color: rgb(var(--text-2));">WM-210</td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500" style="color: rgb(var(--text-2));">$25.50</td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                    <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium text-green-800" style="background-color: rgb(var(--color-success) / 0.1); color: rgb(var(--color-success));">
+                                        In Stock (120)
+                                    </span>
+                                </td>
+                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <button type="button" class="p-1 text-gray-500 rounded-md hover:bg-gray-100" style="color: rgb(var(--text-muted));"><i data-lucide="eye" class="h-4 w-4"></i></button>
+                                        <button type="button" class="p-1 text-gray-500 rounded-md hover:bg-gray-100" style="color: rgb(var(--text-muted));"><i data-lucide="edit-2" class="h-4 w-4"></i></button>
+                                        <button type="button" class="p-1 text-gray-500 rounded-md hover:bg-gray-100" style="color: rgb(var(--text-muted));"><i data-lucide="toggle-right" class="h-4 w-4"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Another Standard Row -->
+                             <tr>
+                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            <img class="h-10 w-10 rounded-md object-cover" src="https://assets.appsmith.com/widgets/default.png" alt="USB-C Hub">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="font-medium text-gray-900" style="color: rgb(var(--text-1));">USB-C Hub</div>
+                                            <div class="text-gray-500" style="color: rgb(var(--text-muted));">Accessories</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500" style="color: rgb(var(--text-2));">UCH-007</td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500" style="color: rgb(var(--text-2));">$49.99</td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                    <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium text-green-800" style="background-color: rgb(var(--color-success) / 0.1); color: rgb(var(--color-success));">
+                                        In Stock (88)
+                                    </span>
+                                </td>
+                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <button type="button" class="p-1 text-gray-500 rounded-md hover:bg-gray-100" style="color: rgb(var(--text-muted));"><i data-lucide="eye" class="h-4 w-4"></i></button>
+                                        <button type="button" class="p-1 text-gray-500 rounded-md hover:bg-gray-100" style="color: rgb(var(--text-muted));"><i data-lucide="edit-2" class="h-4 w-4"></i></button>
+                                        <button type="button" class="p-1 text-gray-500 rounded-md hover:bg-gray-100" style="color: rgb(var(--text-muted));"><i data-lucide="toggle-right" class="h-4 w-4"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Out of Stock Row -->
+                            <tr>
+                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            <img class="h-10 w-10 rounded-md object-cover" src="https://assets.appsmith.com/widgets/default.png" alt="Mechanical Keyboard">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="font-medium text-gray-900" style="color: rgb(var(--text-1));">Mechanical Keyboard</div>
+                                            <div class="text-gray-500" style="color: rgb(var(--text-muted));">Electronics</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500" style="color: rgb(var(--text-2));">MK-87</td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500" style="color: rgb(var(--text-2));">$120.00</td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                    <span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800" style="background-color: rgb(var(--surface-3)); color: rgb(var(--text-2));">
+                                        Out of Stock (0)
+                                    </span>
+                                </td>
+                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <button type="button" class="p-1 text-gray-500 rounded-md hover:bg-gray-100" style="color: rgb(var(--text-muted));"><i data-lucide="eye" class="h-4 w-4"></i></button>
+                                        <button type="button" class="p-1 text-gray-500 rounded-md hover:bg-gray-100" style="color: rgb(var(--text-muted));"><i data-lucide="edit-2" class="h-4 w-4"></i></button>
+                                        <button type="button" class="p-1 text-gray-500 rounded-md hover:bg-gray-100" style="color: rgb(var(--text-muted));"><i data-lucide="toggle-left" class="h-4 w-4"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <nav class="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0" style="border-color: rgb(var(--border-color));" aria-label="Pagination">
+                <div class="hidden sm:block">
+                    <p class="text-sm text-gray-700" style="color: rgb(var(--text-2));">
+                        Showing
+                        <span class="font-medium">1</span>
+                        to
+                        <span class="font-medium">10</span>
+                        of
+                        <span class="font-medium">97</span>
+                        results
+                    </p>
+                </div>
+                <div class="flex flex-1 justify-between sm:justify-end">
+                    <button type="button" class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50" style="border-color: rgb(var(--border-color)); background-color: rgb(var(--surface-1)); color: rgb(var(--text-2));">Previous</button>
+                    <button type="button" class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50" style="border-color: rgb(var(--border-color)); background-color: rgb(var(--surface-1)); color: rgb(var(--text-2));">Next</button>
+                </div>
+            </nav>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
