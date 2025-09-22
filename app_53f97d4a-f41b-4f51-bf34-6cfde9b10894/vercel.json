@@ -1,8 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "pnpm install && cd backend && pnpm build && cd ../frontend && pnpm build",
+  "outputDirectory": "frontend/dist",
+  "installCommand": "pnpm install",
   "functions": {
-    "api/index.ts": {
-      "includeFiles": "{shared/openapi_spec_*.yaml,node_modules/.pnpm/@seriousme+openapi-schema-validator@*/node_modules/@seriousme/openapi-schema-validator/schemas/**/*.json}"
+    "api/index.mjs": {
+      "runtime": "nodejs20.x",
+      "includeFiles": "backend/dist/**,shared/openapi_spec_*.yaml,backend/src/db/migrations/**"
     }
   },
   "rewrites": [
